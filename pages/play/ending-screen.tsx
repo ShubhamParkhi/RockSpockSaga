@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import Rules from "../../components/rules";
 import { AnimatePresence } from "framer-motion";
 import Loading from "../../components/Loading";
-import { loadGame } from "../../components/lib/storage";
+import { loadGame } from "../../components/library/useGameStorage";
 import GameContext from "../../components/GameContext";
 
 const EndingScreen: NextPage = () => {
