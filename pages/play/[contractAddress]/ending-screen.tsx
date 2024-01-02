@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import NavBar from "../../components/nav-bar";
-import Button from "../../components/button";
+import NavBar from "../../../components/nav-bar";
+import Button from "../../../components/button";
 import { useContext, useEffect, useState } from "react";
-import Rules from "../../components/rules";
+import Rules from "../../../components/rules";
 import { AnimatePresence } from "framer-motion";
-import Loading from "../../components/Loading";
-import { loadGame } from "../../components/library/useGameStorage";
-import GameContext from "../../components/GameContext";
+import Loading from "../../../components/Loading";
+import { loadGame } from "../../../components/library/useGameStorage";
+import GameContext from "../../../components/GameContext";
 
 const EndingScreen: NextPage = () => {
   const { gameInfo, currentUser, handleRulesClick, getCurrentUser, showRules, fetchGameInfo } =
