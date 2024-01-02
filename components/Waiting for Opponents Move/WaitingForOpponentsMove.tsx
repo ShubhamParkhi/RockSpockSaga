@@ -10,13 +10,10 @@ import Loading from '../../components/Loading';
 import { RpsFactory } from '../../components/library/rps';
 import GameContext from '../../components/GameContext';
 import ShiftingCountdown from './ShiftingCountdown';
-
-interface WaitingForOpponentsMoveProps {
-    contractAddress: string;
-  }
   
-  const WaitingForOpponentsMove: FC<WaitingForOpponentsMoveProps> = ({ contractAddress }: WaitingForOpponentsMoveProps) => {
+  const WaitingForOpponentsMove: React.FC<{ contractAddress: string }> = (props) => {
   const router = useRouter();
+  const { contractAddress } = props;
   const { gameInfo, currentUser, loading, fetchGameInfo, getCurrentUser, handleRulesClick, setContractAddress, showRules } = useContext(GameContext);
   const [move, setMove] = useState(gameInfo?.c2Move || 0);
   const { timeout, lastAction, player1, player2, stake } = gameInfo || {};
