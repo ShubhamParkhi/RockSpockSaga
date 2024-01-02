@@ -34,7 +34,6 @@ const EndingScreen: NextPage = () => {
 
   let { c2Move, player1, player2 } = gameInfo || {};
 
-  //winner will be true if c1 beats c2
   useEffect(() => {
     if (!currentUser) {
       getCurrentUser();

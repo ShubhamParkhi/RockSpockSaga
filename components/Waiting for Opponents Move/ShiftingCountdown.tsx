@@ -13,7 +13,7 @@ const ShiftingCountdown = ({ timeLeft }: ShiftingCountdownProps) => {
   useEffect(() => {
     setCountdown(timeLeft);
     intervalRef.current = setInterval(() => {
-      setCountdown((prevCountdown) => Math.max(prevCountdown - 1, 0)); // Update countdown
+      setCountdown((prevCountdown) => Math.max(prevCountdown - 1, 0));
     }, 1000);
 
     return () => clearInterval(intervalRef.current || undefined);

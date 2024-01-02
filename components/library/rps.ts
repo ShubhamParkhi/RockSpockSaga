@@ -49,16 +49,9 @@ export class Rps {
     await tx.wait();
   }
 
-  public async TimeOutForPlayer1(): Promise<void> {
-    const tx = await this.contract.j1Timeout();
-    await tx.wait();
-  }
-
   public async TimeOutForPlayer2(): Promise<void> {
     const tx = await this.contract.j2Timeout();
     await tx.wait();
   }
-
-
 }
 

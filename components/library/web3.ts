@@ -1,7 +1,7 @@
 import {BigNumberish, ethers} from "ethers";
 import {RPS_CONTRACT} from "../config";
 
-const infuraKey = 'https://sepolia.infura.io/v3/9a3d514e9cf64b56ae36c14f75ffc153';
+const infuraKey = 'https://sepolia.infura.io/v3/ca2f8983db9147dc89ef7ed30343e523';
 export const getProvider = () => {
   if (window.ethereum) {
     return new ethers.BrowserProvider(window.ethereum);

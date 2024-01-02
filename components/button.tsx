@@ -5,11 +5,7 @@ import { motion } from "framer-motion";
 type ButtonType = {
   text?: string;
   disabled?: boolean;
-
-  /** Style props */
   buttonPadding?: CSSProperties["padding"];
-
-  /** Action props */
   onButtonClick?: () => void;
 };
 

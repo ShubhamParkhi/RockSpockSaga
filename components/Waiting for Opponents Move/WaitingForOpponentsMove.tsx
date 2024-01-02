@@ -29,12 +29,8 @@ const WaitingForOpponentsMove: React.FC<{ contractAddress: string }> = (
   const [move, setMove] = useState(gameInfo?.c2Move || 0);
   const { timeout, lastAction, player1, player2, stake } = gameInfo || {};
 
-  const timeLeft =
-    timeout && lastAction
-      ? timeout - (Math.floor(Date.now() / 1000) - lastAction)
-      : undefined;
+  const timeLeft = timeout && lastAction ? timeout - (Math.floor(Date.now() / 1000) - lastAction) : undefined;
 
-  // Update the contract with the move of player 2
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (typeof contractAddress === "string" && stake !== undefined) {
