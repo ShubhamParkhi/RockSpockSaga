@@ -12,7 +12,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="self-stretch flex flex-1 h-full flex-col items-center justify-center gap-[50px] px-0 text-center text-5xl text-white font-aclonica"
+      className="self-stretch flex flex-1 h-full flex-col items-center justify-center gap-4 px-0 text-center text-5xl text-white font-aclonica"
     >
       <div className="relative">Choose Wisely:</div>
       <div className="self-stretch flex flex-row items-end justify-between">

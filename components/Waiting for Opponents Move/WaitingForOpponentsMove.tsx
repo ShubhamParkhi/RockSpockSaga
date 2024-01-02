@@ -9,6 +9,7 @@ import Moves from '../../components/moves';
 import Loading from '../../components/Loading';
 import { RpsFactory } from '../../components/library/rps';
 import GameContext from '../../components/GameContext';
+import ShiftingCountdown from './ShiftingCountdown';
 
 interface WaitingForOpponentsMoveProps {
     contractAddress: string;
@@ -18,7 +19,9 @@ interface WaitingForOpponentsMoveProps {
   const router = useRouter();
   const { gameInfo, currentUser, loading, fetchGameInfo, getCurrentUser, handleRulesClick, setContractAddress, showRules } = useContext(GameContext);
   const [move, setMove] = useState(gameInfo?.c2Move || 0);
-  const { player1, player2, stake } = gameInfo || {};
+  const { timeout, lastAction, player1, player2, stake } = gameInfo || {};
+  
+  const timeLeft = timeout && lastAction ? timeout - (Math.floor(Date.now() / 1000) - lastAction): undefined;
 
   // Update the contract with the move of player 2
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +56,7 @@ interface WaitingForOpponentsMoveProps {
       {loading || !gameInfo ? (
           <Loading />
         ) : (
-          <div className="w-full items-center flex flex-col gap-8 max-w-[650px]">
+          <div className="w-full items-center flex flex-col gap-4 max-w-[650px]">
             {currentUser === player1 ? (
               <>
                 <div className="self-stretch relative">
@@ -66,6 +69,10 @@ interface WaitingForOpponentsMoveProps {
                 <div className="self-stretch relative">
                   Stake Amount: {stake} ETH
                 </div>
+                <div className="self-stretch relative">
+                  Time left:
+                </div>
+                {timeLeft &&(<ShiftingCountdown timeLeft={timeLeft} />)}
                 <form onSubmit={handleSubmit} className="w-full max-w-[650px]">
                   <Moves onClick={setMove} />
                 </form>
