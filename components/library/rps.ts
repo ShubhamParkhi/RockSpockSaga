@@ -9,12 +9,10 @@ export class RpsFactory {
     const signer = await provider.getSigner();
     return new Rps(address, RPS_CONTRACT.abi, signer);
   }
-
 }
 
 export class Rps {
   private readonly contract: Contract;
-
   constructor(public readonly contractAddress: string, abi: any[], provider: ContractRunner) {
     this.contract = new ethers.Contract(contractAddress, abi, provider);
   }
