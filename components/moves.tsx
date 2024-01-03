@@ -25,7 +25,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           value="1"
         >
           <Image
-            className="relative w-[74px] h-[158.7px] object-cover"
+            className="relative object-cover"
             width={74}
             height={158.7}
             alt="Rock"
@@ -45,7 +45,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           value="2"
         >
           <Image
-            className="relative w-[113.2px] h-[200px] object-cover"
+            className="relative object-cover"
             width={113.2}
             height={200}
             alt="Paper"
@@ -65,7 +65,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           value="3"
         >
           <Image
-            className="relative w-[61.7px] h-[191.1px] object-cover"
+            className="relative object-cover"
             width={61.7}
             height={191.1}
             alt="Scissors"
@@ -85,7 +85,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           value="4"
         >
           <Image
-            className="relative w-[68.9px] h-[186.8px] object-cover"
+            className="relative object-cover"
             width={68.9}
             height={186.8}
             alt="Lizard"
@@ -105,7 +105,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           value="5"
         >
           <Image
-            className="relative w-[91.5px] h-[195.7px] object-cover"
+            className="relative object-cover"
             width={91.5}
             height={195.7}
             alt="Spock"
