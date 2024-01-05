@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import { FormEvent, memo, useMemo, useState } from "react";
 import Button from "../button";
 import Moves from "../moves";
@@ -16,7 +15,7 @@ interface FormProps {
   onFormSubmit: (formState: FormState) => void;
 }
 
-const Form: NextPage<FormProps> = memo(({onFormSubmit}: FormProps) => {
+const Form = memo(({onFormSubmit}: FormProps) => {
   const [opponent, setOpponent] = useState("");
   const [amount, setAmount] = useState<BigNumberish>(0);
   const [showMoves, setShowMoves] = useState(false);

@@ -1,52 +1,54 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import NavBar from "../../../components/nav-bar";
-import Button from "../../../components/button";
-import { useContext, useEffect, useState } from "react";
-import Rules from "../../../components/rules";
-import { AnimatePresence } from "framer-motion";
-import Loading from "../../../components/Loading";
-import { loadGame } from "../../../components/library/useGameStorage";
-import GameContext from "../../../components/GameContext";
+import React, { useContext, useEffect, useState } from 'react';
+import NavBar from '../../components/nav-bar';
+import Button from '../../components/button';
+import Rules from '../../components/rules';
+import { AnimatePresence } from 'framer-motion';
+import Loading from '../../components/Loading';
+import { loadGame } from '../../components/library/useGameStorage';
+import GameContext from '../../components/GameContext';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const EndingScreen: NextPage = () => {
-  const { gameInfo, currentUser, handleRulesClick, getCurrentUser, showRules, fetchGameInfo } =
-    useContext(GameContext);
-  const router = useRouter();
-  const url = router.asPath;
-  const parts = url.split("/");
-  const contractAddress = parts[2];
+interface EndingScreenProps {}
 
+const EndingScreen: React.FC<EndingScreenProps> = () => {
+  const {
+    gameInfo,
+    currentUser,
+    handleRulesClick,
+    getCurrentUser,
+    showRules,
+    fetchGameInfo,
+  } = useContext(GameContext);
+  const navigate = useNavigate(); // Use navigate from react-router-dom
+  const {contractAddress} = useParams<string>()
   const [winner, setWinner] = useState(false);
   const game = loadGame();
   const c1Move = game?.move || 0;
-
-  useEffect(() => {
-    if (!currentUser) {
-      getCurrentUser();
-    }
-    fetchGameInfo(contractAddress);
-  }, [contractAddress]);
-
-  const onButtonClick = () => {
-    router.push("/game-creating-session");
-  };
-
   let { c2Move, player1, player2 } = gameInfo || {};
 
   useEffect(() => {
     if (!currentUser) {
       getCurrentUser();
     }
+    if (typeof contractAddress === "string" && !gameInfo) {
+    fetchGameInfo(contractAddress);
+  }
+  }, [contractAddress, currentUser, fetchGameInfo, gameInfo, getCurrentUser]);
 
+  const onButtonClick = () => {
+    navigate('/game-creating-session');
+    localStorage.clear();
+  };
+
+  useEffect(() => {
     if (c2Move !== undefined) {
-      if (c1Move % 2 == c2Move % 2) {
+      if (c1Move % 2 === c2Move % 2) {
         setWinner(c1Move < c2Move);
       } else {
         setWinner(c1Move > c2Move);
       }
     }
-  }, [c2Move]);
+  }, [c1Move, c2Move]);
 
   return (
     <div className="relative bg-gray-300 w-full h-screen flex flex-col items-center justify-start overflow-hidden py-10 px-2.5 box-border text-center text-23xl-7 text-aliceblue font-aclonica">

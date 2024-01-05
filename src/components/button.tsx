@@ -1,21 +1,20 @@
-import type { NextPage } from "next";
-import { useMemo, type CSSProperties } from "react";
-import { motion } from "framer-motion";
+import React, { type CSSProperties, useMemo } from 'react';
+import { motion } from 'framer-motion';
 
-type ButtonType = {
+interface ButtonProps {
   text?: string;
   disabled?: boolean;
   buttonPadding?: CSSProperties["padding"];
   onButtonClick?: () => void;
-};
+}
 
-const Button: NextPage<ButtonType> = ({
+const Button: React.FC<ButtonProps> = ({
   text,
   buttonPadding,
   onButtonClick,
   disabled,
 }) => {
-  const buttonStyle: CSSProperties = useMemo(() => {
+  const buttonStyle = useMemo(() => {
     return {
       padding: buttonPadding,
     };
@@ -27,11 +26,11 @@ const Button: NextPage<ButtonType> = ({
       style={buttonStyle}
       onClick={onButtonClick}
       disabled={disabled}
-      whileHover={{ 
-        boxShadow: "0px 0px 10px 0px #FFF", 
+      whileHover={{
+        boxShadow: "0px 0px 10px 0px #FFF",
         scale: 1.025,
       }}
-      whileTap={{scale: 0.975}}
+      whileTap={{ scale: 0.975 }}
     >
     <div className="relative">{text}</div>
     </motion.button>

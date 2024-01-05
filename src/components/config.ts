@@ -1,7 +1,6 @@
 export const RPS_CONTRACT = {
   "_format": "hh-sol-artifact-1",
   "contractName": "RPS",
-  "sourceName": "contracts/RPS.sol",
   "abi": [
     {
       "constant": true,

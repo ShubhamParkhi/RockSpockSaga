@@ -1,21 +1,19 @@
-import type { NextPage } from "next";
-import { memo, useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Button from "../button";
 import GameContext from "../GameContext";
 import { RpsFactory } from "../library/rps";
 import { loadGame } from "../library/useGameStorage";
-import { useRouter } from "next/router";
+import { useNavigate } from "react-router-dom";
 
-const Main: NextPage = memo(() => {
+const Main = memo(() => {
   const { gameInfo, contractAddress } = useContext(GameContext);
   const c2Move = gameInfo?.c2Move;
   const game = loadGame();
   const move = game?.move || 0;
   const salt = game?.salt || 0;
-  const havePlayed = (c2Move !== 0);
-  const router = useRouter();
+  const havePlayed = c2Move !== 0;
+  const navigate = useNavigate();
 
   const onButtonClick = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -24,22 +22,21 @@ const Main: NextPage = memo(() => {
     );
   };
 
-  async function handleSolve() {
-    if (typeof contractAddress === "string") {
-      try {
-        await (await RpsFactory.getReadWriteContract(contractAddress!)).Solve(move, salt);
-        router.push(`/play/${contractAddress}/ending-screen`);
-      } catch (error) {
-        console.error("Error solving contract:", error);
+  useEffect(() => {
+    async function handleSolve() {
+      if (havePlayed) {
+        try {
+          await (
+            await RpsFactory.getReadWriteContract(contractAddress!)
+          ).Solve(move, salt);
+          navigate(`/play/${contractAddress}/ending-screen`);
+        } catch (error) {
+          console.error("Error solving contract:", error);
+        }
       }
     }
-  }
-
-  useEffect(() => {
-    if (havePlayed) {
-      handleSolve();
-    }
-  }, [havePlayed]);
+    handleSolve();
+  }, [contractAddress, havePlayed, move, navigate, salt]);
 
   return (
     <>
@@ -56,7 +53,7 @@ const Main: NextPage = memo(() => {
           animate={{ rotate: [10, -10] }}
           transition={{ duration: 0.3, repeat: Infinity, repeatType: "mirror" }}
         >
-          <Image
+          <img
             className="relative object-cover"
             width={158.7}
             height={74}
@@ -73,7 +70,7 @@ const Main: NextPage = memo(() => {
             repeatType: "mirror",
           }}
         >
-          <Image
+          <img
             className="relative object-cover"
             width={158.7}
             height={74}

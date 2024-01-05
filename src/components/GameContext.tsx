@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import { RpsFactory } from "../components/library/rps";
 import { GameInfo } from "./types/gameInfo";
 import { getProvider, getSigner } from "./library/web3";
@@ -35,7 +35,6 @@ declare global {
   }
 }
 
-// Provider component to wrap your application
 export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {

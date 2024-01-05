@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { AnimatePresence } from "framer-motion";
-import { useRouter } from "next/router";
+import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../../components/nav-bar";
 import Rules from "../../components/rules";
 import Main from "../../components/Waiting for Opponents Move/main";
@@ -11,11 +11,9 @@ import { RpsFactory } from "../../components/library/rps";
 import GameContext from "../../components/GameContext";
 import ShiftingCountdown from "./ShiftingCountdown";
 
-const WaitingForOpponentsMove: React.FC<{ contractAddress: string }> = (
-  props
-) => {
-  const router = useRouter();
-  const { contractAddress } = props;
+const WaitingForOpponentsMove = () => {
+  const navigate = useNavigate();
+  const {contractAddress} = useParams<string>()
   const {
     gameInfo,
     currentUser,
@@ -36,48 +34,38 @@ const WaitingForOpponentsMove: React.FC<{ contractAddress: string }> = (
     if (typeof contractAddress === "string" && stake !== undefined) {
       const contract = await RpsFactory.getReadWriteContract(contractAddress);
       await contract.JoinGame(move, ethers.parseEther(stake));
-      router.push(
-        "/play/[contractAddress]/ending-screen",
-        `/play/${contractAddress}/ending-screen`
-      );
+      navigate(`/play/${contractAddress}/ending-screen`)
     }
   };
 
-  async function timeOut() {
-    try {
-      await (
-        await RpsFactory.getReadWriteContract(contractAddress!)
-      ).TimeOutForPlayer2();
-      router.push(`/play/${contractAddress}/ending-screen`);
-    } catch (error) {
-      console.error("Error solving contract:", error);
-    }
-  }
-
   useEffect(() => {
-    if (timeLeft && timeLeft <= 0) {
-      timeOut();
+    async function handleTimeOutOrZeroStake() {
+      if (timeLeft &&  currentUser === player1 && stake !== "0.0" && timeLeft <= 0) {
+        try {
+          await (await RpsFactory.getReadWriteContract(contractAddress!)).TimeOutForPlayer2();
+          navigate(`/play/${contractAddress}/ending-screen`);
+        } catch (error) {
+          console.error("Error solving contract:", error);
+        }
+      }
+      if (stake === "0.0") {
+        navigate(`/play/${contractAddress}/ending-screen`);
+      }
     }
-  }, [timeLeft, timeOut]);
-
-  useEffect(() => {
-    if (stake === "0.0") {
-      router.push(
-        "/play/[contractAddress]/ending-screen",
-        `/play/${contractAddress}/ending-screen`
-      );
-    }
-  }, [stake]);
+    handleTimeOutOrZeroStake();
+  }, [timeLeft, stake, currentUser, player1, contractAddress, navigate]);
 
   useEffect(() => {
     if (!currentUser) {
       getCurrentUser();
     }
-    if (typeof contractAddress === "string") {
+    if (typeof contractAddress === "string" && !contractAddress) {
       setContractAddress(contractAddress);
+    }
+    if (typeof contractAddress === "string" && !gameInfo) {
       fetchGameInfo(contractAddress);
     }
-  }, [contractAddress]);
+    }, [contractAddress, currentUser, fetchGameInfo, gameInfo, getCurrentUser, setContractAddress]);
 
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-start overflow-hidden py-10 px-2.5 box-border text-center text-23xl-7 text-aliceblue font-aclonica">

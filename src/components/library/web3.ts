@@ -32,9 +32,7 @@ interface DeployContractParams {
 export const deployContract = async (info: DeployContractParams): Promise<string> => {
   const signer = await getSigner();
   const contractFactory = new ethers.ContractFactory(RPS_CONTRACT.abi, RPS_CONTRACT.bytecode, signer);
-
   const hash = ethers.solidityPackedKeccak256(["uint8", "uint256"], [info.move, info.salt])
-
   const contract = await contractFactory.deploy(hash, info.opponent, {
     value: info.amount,
   });

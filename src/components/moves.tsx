@@ -1,12 +1,11 @@
-import type { NextPage } from "next";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-type IProps = {
+interface IProps {
   onClick: (value: number) => void;
-};
+}
 
-const Moves: NextPage<IProps> = (props: IProps) => {
+const Moves: React.FC<IProps> = (props) => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -18,13 +17,10 @@ const Moves: NextPage<IProps> = (props: IProps) => {
       <div className="self-stretch flex flex-row items-end justify-between">
         <button
           className="cursor-pointer [border:none] p-0 bg-[transparent] shrink-0 flex flex-col items-center justify-end gap-[10px] no-underline"
-          onClick={(e) =>
-            props.onClick &&
-            props.onClick(Number((e.currentTarget as HTMLButtonElement).value))
-          }
+          onClick={(e) => props.onClick && props.onClick(Number((e.currentTarget as HTMLButtonElement).value))}
           value="1"
         >
-          <Image
+          <img
             className="relative object-cover"
             width={74}
             height={158.7}
@@ -44,7 +40,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           }
           value="2"
         >
-          <Image
+          <img
             className="relative object-cover"
             width={113.2}
             height={200}
@@ -64,7 +60,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           }
           value="3"
         >
-          <Image
+          <img
             className="relative object-cover"
             width={61.7}
             height={191.1}
@@ -84,7 +80,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           }
           value="4"
         >
-          <Image
+          <img
             className="relative object-cover"
             width={68.9}
             height={186.8}
@@ -104,7 +100,7 @@ const Moves: NextPage<IProps> = (props: IProps) => {
           }
           value="5"
         >
-          <Image
+          <img
             className="relative object-cover"
             width={91.5}
             height={195.7}

@@ -1,19 +1,18 @@
-import type { NextPage } from "next";
-import NavBar from "../components/nav-bar";
-import Form, { FormState } from "../components/Game Creating Session/form";
-import Rules from "../components/rules";
-import { loadGame, saveGame } from "../components/library/useGameStorage";
-import { useContext, useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { deployContract } from "../components/library/web3";
-import { useRouter } from "next/router";
-import Button from "../components/button";
-import GameContext from "../components/GameContext";
+import { useContext, useEffect, useState } from 'react';
+import NavBar from '../nav-bar';
+import Form, { FormState } from '../Game Creating Session/form';
+import Rules from '../rules';
+import { loadGame, saveGame } from '../library/useGameStorage';
+import { AnimatePresence } from 'framer-motion';
+import { deployContract } from '../library/web3';
+import { useNavigate } from 'react-router-dom';
+import Button from '../button';
+import GameContext from '../GameContext';
 
-const GameCreatingSession: NextPage = () => {
+const GameCreatingSession = () => {
   const [contractAddress, setContractAddress] = useState<string | null>(null);
   const [hasDeployed, setHasDeployed] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
   const lastGame = loadGame();
   const { handleRulesClick, showRules } = useContext(GameContext);
 
@@ -26,9 +25,9 @@ const GameCreatingSession: NextPage = () => {
         opponent,
         amount,
       });
-      window.alert("Contract deployed successfully");
+      window.alert('Contract deployed successfully');
     } catch (e) {
-      window.alert("Error deploying contract");
+      window.alert('Error deploying contract');
       console.error(e);
       return;
     }
@@ -42,12 +41,14 @@ const GameCreatingSession: NextPage = () => {
   };
 
   const returnToLastGame = () => {
-    router.push(`/play/${lastGame?.contractAddress}`);
+    navigate(`/play/${lastGame?.contractAddress}`);
   };
 
   useEffect(() => {
-    hasDeployed ? router.push(`/play/${contractAddress}`) : null;
-  }, [hasDeployed]);
+    if (hasDeployed) {
+      navigate(`/play/${contractAddress}`);
+    }
+  }, [contractAddress, hasDeployed, navigate]);
 
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-start py-10 px-2.5 box-border">
