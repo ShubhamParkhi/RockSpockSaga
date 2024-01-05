@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { GameProvider } from "./components/GameContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GameCreatingSession from "./components/Game Creating Session/GameCreatingSession";
@@ -10,26 +10,37 @@ function App() {
   return (
     <Router>
       <div className="bg-[url('../public/bg.png')] bg-cover bg-no-repeat bg-[top] select-none">
-        <motion.div
-          initial="pageInitial"
-          animate="pageAnimate"
-          variants={{
-            pageInitial: { opacity: 0 },
-            pageAnimate: { opacity: 1 },
-          }}
-        >
-          <GameProvider>
+        <GameProvider>
+          <AnimatePresence>
             <Routes>
               <Route path="/" element={<SplashScreen />} />
-              <Route path="/game-creating-session" element={<GameCreatingSession />} />
-              <Route path="play/:contractAddress" element={<WaitingForOpponentsMove />} />
+              <Route
+                path="/game-creating-session"
+                element={
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <GameCreatingSession />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="play/:contractAddress"
+                element={
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <WaitingForOpponentsMove />
+                  </motion.div>
+                }
+              />
               <Route
                 path="play/:contractAddress/ending-screen"
-                element={<EndingScreen />}
+                element={
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <EndingScreen />
+                  </motion.div>
+                }
               />
             </Routes>
-          </GameProvider>
-        </motion.div>
+          </AnimatePresence>
+        </GameProvider>
       </div>
     </Router>
   );

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Button from '../components/button';
 import GameContext from './GameContext';
 
@@ -12,7 +12,7 @@ const NavBar: React.FC<NavBarProps> = ({ onRulesClick }) => {
 
   return (
     <div className="rounded-xl bg-gray-200 [backdrop-filter:blur(10px)] box-border max-w-[1720px] w-full flex flex-row items-center justify-between py-2.5 px-[24px] text-left text-5xl text-aliceblue font-aclonica">
-      <Link
+      <NavLink
         className="flex flex-row items-center justify-center py-[5px] px-0 gap-[10px] no-underline"
         to="/"
       >
@@ -28,24 +28,24 @@ const NavBar: React.FC<NavBarProps> = ({ onRulesClick }) => {
           <p className="m-0">Rock Spock</p>
           <p className="m-0 text-base">SAGA</p>
         </div>
-      </Link>
+      </NavLink>
       <div className="flex flex-row items-center justify-center gap-[30px] text-center text-base text-white">
-        <Link
+        <NavLink
           to="/game-creating-session"
           className="relative leading-[30.97px] no-underline text-white"
         >
           Home
-        </Link>
+        </NavLink>
         <div className="relative leading-[30.97px] cursor-pointer" onClick={onRulesClick}>
           Rules
         </div>
-        <Link
+        <NavLink
           to="https://shubhamparkhi.vercel.app"
           target="_blank"
           className="relative leading-[30.97px] no-underline text-white"
         >
           Developer
-        </Link>
+        </NavLink>
         {!currentUser ? (
           <Button
             text="Connect Wallet"
