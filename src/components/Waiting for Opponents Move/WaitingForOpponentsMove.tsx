@@ -40,7 +40,7 @@ const WaitingForOpponentsMove = () => {
 
   useEffect(() => {
     async function handleTimeOutOrZeroStake() {
-      if (timeLeft &&  currentUser === player1 && stake !== "0.0" && timeLeft <= 0) {
+      if (timeLeft && currentUser === player1 && stake !== "0.0" && timeLeft <= 0) {
         try {
           await (await RpsFactory.getReadWriteContract(contractAddress!)).TimeOutForPlayer2();
           navigate(`/play/${contractAddress}/ending-screen`);
