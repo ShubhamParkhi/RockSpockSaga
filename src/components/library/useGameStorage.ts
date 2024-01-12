@@ -1,7 +1,7 @@
 interface Game {
   contractAddress: string;
   move: number;
-  salt: number;
+  salt: bigint;
 }
 
 export const saveGame = (game: Game) => {

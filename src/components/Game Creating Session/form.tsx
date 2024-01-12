@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import {BigNumberish, ethers} from "ethers";
 
 export interface FormState {
-  salt: number;
+  salt: bigint;
   move: number;
   opponent: string;
   amount: BigNumberish;
@@ -38,12 +38,18 @@ const Form = memo(({onFormSubmit}: FormProps) => {
     }
   };
   
-  const generateSecureRandomSalt = (): number => {
-    const array = new Uint32Array(1);
+  const generateSecureRandomSalt = () => {
+    const array = new Uint32Array(8);
     window.crypto.getRandomValues(array);
-    return array[0];
-  };
   
+    let bigInt = BigInt(0);
+    for (let i = 0; i < 8; i++) {
+      bigInt = (bigInt << BigInt(32)) | BigInt(array[i]);
+    }
+  
+    return bigInt;
+  };
+      
   const isValid = useMemo(() => validateInput(move, opponent), [move, opponent]);
 
   return (

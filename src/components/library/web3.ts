@@ -24,7 +24,7 @@ export const getSigner = async () => {
 
 interface DeployContractParams {
   move: number,
-  salt: number,
+  salt: bigint,
   opponent: string,
   amount: BigNumberish,
 }
