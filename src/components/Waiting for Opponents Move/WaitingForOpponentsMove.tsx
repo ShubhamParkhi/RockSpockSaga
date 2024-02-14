@@ -53,7 +53,7 @@ const WaitingForOpponentsMove = () => {
       }
     }
     handleTimeOutOrZeroStake();
-  }, [timeLeft, stake, currentUser, player1, contractAddress, navigate]);
+  }, [contractAddress, navigate, stake, timeLeft]);
 
   useEffect(() => {
     if (!currentUser) {
