@@ -46,10 +46,9 @@ const Form = memo(({onFormSubmit}: FormProps) => {
     for (let i = 0; i < 8; i++) {
       bigInt = (bigInt << BigInt(32)) | BigInt(array[i]);
     }
-  
     return bigInt;
   };
-      
+
   const isValid = useMemo(() => validateInput(move, opponent), [move, opponent]);
 
   return (
